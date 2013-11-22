@@ -44,7 +44,7 @@ var dt = new Date(2009, 0, 4);
 var today = new Date();
 var requestTime;
 
-var getNextImage = function (){
+var getNextImage = function (dontStart){
     //var url = image.supplant({ year: 2012, month: pad(randomInt(12), 2), day: pad(randomInt(28), 2) });
     var url = image.supplant({ year: dt.getFullYear(), month: pad(dt.getMonth() + 1, 2), day: pad(dt.getDate(), 2) });
     dt.setTime(dt.getTime() + (24 * 60 * 60 * 1000));
@@ -57,19 +57,22 @@ var getNextImage = function (){
       }
 
       var img = document.createElement('img');
+      img.setAttribute("id", "img");
       img.onload = function(){
         if(IsImageOk(img)){
-          $('img').remove();
+          $('#img').remove();
           document.body.appendChild(img);
           $('#text').html(strftime('%B %Y', dt));
         } else {
           duds = duds.concat(url);
         }
         var timeDifference = new Date() - requestTime
-        if(timeDifference < 800){
-          setTimeout(getNextImage, 800 - timeDifference);
-        } else {
-          getNextImage();
+        if(!dontStart){
+          if(timeDifference < 800){
+            setTimeout(getNextImage, 800 - timeDifference);
+          } else {
+            getNextImage();
+          }
         }
       };
       img.onerror = function(){
@@ -83,4 +86,7 @@ var getNextImage = function (){
     //dt.setTime(dt.getTime() + (24 * 60 * 60 * 1000));
 }
 
-getNextImage();
+$(document).ready(function(){
+  getNextImage(true);
+});
+//' style='position:absolute; top:20%; left:20%;' />
