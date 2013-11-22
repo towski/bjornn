@@ -61,12 +61,13 @@ var getNextImage = function (){
         if(IsImageOk(img)){
           $('img').remove();
           document.body.appendChild(img);
+          $('#text').html(strftime('%B %Y', dt));
         } else {
           duds = duds.concat(url);
         }
         var timeDifference = new Date() - requestTime
-        if(timeDifference < 500){
-          setTimeout(getNextImage, 500 - timeDifference);
+        if(timeDifference < 800){
+          setTimeout(getNextImage, 800 - timeDifference);
         } else {
           getNextImage();
         }
@@ -79,7 +80,7 @@ var getNextImage = function (){
       requestTime = new Date();
 
     }
-    dt.setTime(dt.getTime() + (24 * 60 * 60 * 1000));
+    //dt.setTime(dt.getTime() + (24 * 60 * 60 * 1000));
 }
 
 getNextImage();
