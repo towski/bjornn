@@ -53,7 +53,7 @@ var getNextImage = function (){
     } else {
     console.log(url);
     if(dt > today){
-      dt = new Date(2009, 0, 4);
+      return;
     }
 
     var img = document.createElement('img');
