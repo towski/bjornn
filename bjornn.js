@@ -69,11 +69,11 @@ var getNextImage = function (dontStart){
         }
         if(!dontStart){
           var timeDifference = new Date() - requestTime
-          var aphex_twin_eighth_note = 975//117 bpm
+          var aphex_twin_eighth_note = 991.6//117 bpm
           if(!dontStart && !startTime){
             startTime = new Date();
           } else {
-            startTime.setTime(startTime.getTime() + 975)
+            startTime.setTime(startTime.getTime() + aphex_twin_eighth_note)
           }
           if(timeDifference < aphex_twin_eighth_note){
             var drift = (new Date()) - startTime
