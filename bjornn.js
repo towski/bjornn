@@ -68,8 +68,9 @@ var getNextImage = function (dontStart){
         }
         var timeDifference = new Date() - requestTime
         if(!dontStart){
-          if(timeDifference < 800){
-            setTimeout(getNextImage, 800 - timeDifference);
+          var aphex_twin_eighth_note = 958
+          if(timeDifference < aphex_twin_eighth_note){
+            setTimeout(getNextImage, aphex_twin_eighth_note - timeDifference);
           } else {
             getNextImage();
           }
