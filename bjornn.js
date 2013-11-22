@@ -43,6 +43,7 @@ var duds = [];
 var dt = new Date(2009, 0, 4);
 var today = new Date();
 var requestTime;
+var startTime;
 
 var getNextImage = function (dontStart){
     //var url = image.supplant({ year: 2012, month: pad(randomInt(12), 2), day: pad(randomInt(28), 2) });
@@ -66,11 +67,17 @@ var getNextImage = function (dontStart){
         } else {
           duds = duds.concat(url);
         }
-        var timeDifference = new Date() - requestTime
         if(!dontStart){
+          var timeDifference = new Date() - requestTime
           var aphex_twin_eighth_note = 975//117 bpm
+          if(!dontStart && !startTime){
+            startTime = new Date();
+          } else {
+            startTime.setTime(startTime.getTime() + 975)
+          }
           if(timeDifference < aphex_twin_eighth_note){
-            setTimeout(getNextImage, aphex_twin_eighth_note - timeDifference);
+            var drift = (new Date()) - startTime
+            setTimeout(getNextImage, aphex_twin_eighth_note - timeDifference - drift);
           } else {
             getNextImage();
           }
