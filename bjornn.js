@@ -42,6 +42,7 @@ function IsImageOk(img) {
 var duds = [];
 var dt = new Date(2009, 0, 4);
 var today = new Date();
+var requestTime;
 
 var getNextImage = function (){
     //var url = image.supplant({ year: 2012, month: pad(randomInt(12), 2), day: pad(randomInt(28), 2) });
@@ -51,27 +52,32 @@ var getNextImage = function (){
     if(skipArray.indexOf(url) > -1){    
       getNextImage();
     } else {
-    console.log(url);
-    if(dt > today){
-      return;
-    }
+      if(dt > today){
+        return;
+      }
 
-    var img = document.createElement('img');
-    img.onload = function(){
-      if(IsImageOk(img)){
-        $('img').remove();
-        document.body.appendChild(img);
-      } else {
+      var img = document.createElement('img');
+      img.onload = function(){
+        if(IsImageOk(img)){
+          $('img').remove();
+          document.body.appendChild(img);
+        } else {
+          duds = duds.concat(url);
+        }
+        var timeDifference = new Date() - requestTime
+        if(timeDifference < 500){
+          setTimeout(getNextImage, 500 - timeDifference);
+        } else {
+          getNextImage();
+        }
+      };
+      img.onerror = function(){
+        getNextImage();
         duds = duds.concat(url);
       }
-      console.log('getnextimage');
-      getNextImage();
-    };
-    img.onerror = function(){
-      getNextImage();
-      duds = duds.concat(url);
-     }
-    img.src = url
+      img.src = url;
+      requestTime = new Date();
+
     }
     dt.setTime(dt.getTime() + (24 * 60 * 60 * 1000));
 }
